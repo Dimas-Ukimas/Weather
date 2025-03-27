@@ -1,0 +1,7 @@
+databaseChangeLog:
+  - include:
+      file: /changelog/changeset/001-add-users-table.sql
+  - include:
+      file: /changelog/changeset/002-add-locations-table.sql
+  - include:
+      file: /changelog/changeset/003-add-sessions-table.sql

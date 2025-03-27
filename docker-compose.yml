@@ -1,0 +1,66 @@
+version: '3.8'
+
+services:
+  database:
+    image: postgres:16
+    container_name: postgres-container
+    env_file:
+      - .env
+    environment:
+      POSTGRES_DB: ${POSTGRES_DB}
+      POSTGRES_USER: ${POSTGRES_USER}
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD}
+    volumes:
+        - db-data:/var/lib/postgresql/data
+    ports:
+        - "5432:5432"
+    networks:
+          - my_network
+
+  liquibase:
+    image: liquibase/liquibase:4.31.1
+    container_name: liquibase-container
+    env_file:
+      - .env
+    environment:
+      DB_URL: ${DB_URL}
+      DB_USER: ${DB_USER}
+      DB_PASSWORD: ${DB_PASSWORD}
+      CHANGELOG_FILE: /liquibase/changelog/changelog-master.yaml
+    volumes:
+      - ./src/main/resources/db/changelog:/liquibase/changelog
+    depends_on:
+      - database
+    networks:
+      - my_network
+    command:
+      --url=${DB_URL}
+      --username=${DB_USER}
+      --password=${DB_PASSWORD}
+      --changeLogFile=/changelog/changelog-master.yaml update
+
+  tomcat:
+    container_name: tomcat-container
+    env_file:
+      - .env
+    build: .
+    environment:
+        DB_URL: ${DB_URL}
+        DB_USER: ${DB_USER}
+        DB_PASSWORD: ${DB_PASSWORD}
+        JPDA_ADDRESS: "*:5005"
+        JPDA_TRANSPORT: "dt_socket"
+    depends_on:
+        - liquibase
+    ports:
+        - "8080:8080"
+        - "5005:5005"
+    networks:
+      - my_network
+
+volumes:
+  db-data:
+
+networks:
+  my_network:
+
