@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" xmlns:th = "http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Weather Viewer – Homepage</title>
@@ -15,8 +15,17 @@
             Weather Tracker
         </a>
         <div class="d-flex align-items-center">
-            <span class="navbar-text me-3">zhukovsd</span>
-            <button class="btn btn-outline-danger">Sign out</button>
+            <span class="navbar-text me-3"></span>
+
+            <div th:if="${session.user}">
+                <span th:text="${session.user}"></span>
+                <a href="/sign-out" class="btn btn-outline-danger">Sign out</a>
+            </div>
+
+            <div th:unless="${session.user}">
+                <a href="/sign-in" class="btn btn-outline-success">Sign in</a>
+                <a href="/sign-up" class="btn btn-outline-success">Sign up</a>
+            </div>
         </div>
     </div>
 </nav>

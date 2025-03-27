@@ -48,14 +48,15 @@ services:
         DB_URL: ${DB_URL}
         DB_USER: ${DB_USER}
         DB_PASSWORD: ${DB_PASSWORD}
+        JPDA_ADDRESS: "*:5005"
+        JPDA_TRANSPORT: "dt_socket"
     depends_on:
         - liquibase
     ports:
         - "8080:8080"
+        - "5005:5005"
     networks:
       - my_network
-    profiles:
-      - prod
 
 volumes:
   db-data:
