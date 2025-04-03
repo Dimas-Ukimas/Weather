@@ -1,4 +1,4 @@
-FROM tomcat:10-jdk17
+FROM tomcat:10-jdk21
 
 COPY build/libs/weatherApp-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
 
