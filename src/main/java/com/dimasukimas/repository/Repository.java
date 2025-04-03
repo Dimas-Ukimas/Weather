@@ -1,7 +1,18 @@
 package com.dimasukimas.repository;
 
-public interface Repository<T, ID>{
+import java.util.List;
+import java.util.Optional;
 
- void persist(T t);
+public interface Repository<E, ID>{
+
+ void persist(E entity);
+
+// Optional<E> findById(ID id);
+//
+// void delete(ID id);
+//
+// E update(E entity);
+//
+// List<E> findAll();
 
 }
