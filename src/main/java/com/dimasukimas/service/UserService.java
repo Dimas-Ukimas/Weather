@@ -8,6 +8,7 @@ import com.dimasukimas.repository.UserRepository;
 import com.dimasukimas.util.CookieUtils;
 import jakarta.servlet.http.Cookie;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -16,15 +17,21 @@ import java.util.UUID;
 @Service
 @RequiredArgsConstructor
 @Transactional
-public class RegistrationService {
+public class UserService {
 
     private final UserRepository userRepository;
     private final SessionService sessionService;
     private final UserMapper mapper;
+    private final PasswordEncoder passwordEncoder;
 
 
     public UserResponseDto registerUser(UserRequestDto dto) {
         User user = mapper.toEntity(dto);
+
+        String rawPassword = user.getPassword();
+        String hashedPassword = passwordEncoder.encode(rawPassword);
+        user.setPassword(hashedPassword);
+
         userRepository.persist(user);
 
         UUID sessionId = sessionService.createSession(user);
