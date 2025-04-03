@@ -2,7 +2,7 @@ package com.dimasukimas.controller;
 
 import com.dimasukimas.dto.UserRequestDto;
 import com.dimasukimas.dto.UserResponseDto;
-import com.dimasukimas.service.RegistrationService;
+import com.dimasukimas.service.UserService;
 import jakarta.servlet.http.HttpServletResponse;
 import jakarta.servlet.http.HttpSession;
 import jakarta.validation.Valid;
@@ -17,7 +17,7 @@ import org.springframework.web.bind.annotation.*;
 @RequestMapping("/sign-up")
 public class RegistrationController {
 
-    private final RegistrationService registrationService;
+    private final UserService userService;
     private final static String HOME_PAGE_REDIRECT = "redirect:/";
 
 
@@ -32,7 +32,7 @@ public class RegistrationController {
                          HttpSession session,
                          @Valid UserRequestDto userRequestDto) {
 
-        UserResponseDto userInfo = registrationService.registerUser(userRequestDto);
+        UserResponseDto userInfo = userService.registerUser(userRequestDto);
         response.addCookie(userInfo.cookie());
         session.setAttribute("user", userInfo.login());
 
