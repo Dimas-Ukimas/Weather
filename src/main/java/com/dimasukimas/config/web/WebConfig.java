@@ -1,9 +1,8 @@
-package com.dimasukimas.config;
+package com.dimasukimas.config.web;
 
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.web.servlet.ViewResolver;
 import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
 import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
 import org.springframework.web.servlet.config.annotation.WebMvcConfigurer;
@@ -15,9 +14,10 @@ import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 public class WebConfig implements WebMvcConfigurer {
 
     @Bean
-    public ViewResolver viewResolver() {
+    public ThymeleafViewResolver viewResolver(SpringTemplateEngine templateEngine) {
         ThymeleafViewResolver resolver = new ThymeleafViewResolver();
-        resolver.setTemplateEngine(templateEngine());
+        resolver.setTemplateEngine(templateEngine);
+        resolver.setCharacterEncoding("UTF-8");
         return resolver;
     }
 

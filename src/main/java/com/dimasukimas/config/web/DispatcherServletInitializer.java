@@ -1,5 +1,6 @@
-package com.dimasukimas.config;
+package com.dimasukimas.config.web;
 
+import com.dimasukimas.config.AppConfig;
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
 public class DispatcherServletInitializer extends AbstractAnnotationConfigDispatcherServletInitializer {

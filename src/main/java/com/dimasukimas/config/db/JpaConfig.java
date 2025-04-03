@@ -1,4 +1,4 @@
-package com.dimasukimas.config;
+package com.dimasukimas.config.db;
 
 import jakarta.persistence.EntityManagerFactory;
 import lombok.RequiredArgsConstructor;

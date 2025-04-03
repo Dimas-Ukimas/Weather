@@ -1,4 +1,4 @@
-package com.dimasukimas.config;
+package com.dimasukimas.config.util;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
