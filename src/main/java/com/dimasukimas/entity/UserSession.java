@@ -2,8 +2,8 @@ package com.dimasukimas.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
+import lombok.*;
+
 import java.time.LocalDateTime;
 import java.util.UUID;
 
@@ -11,6 +11,8 @@ import java.util.UUID;
 @Table(name = "Sessions")
 @Builder
 @Getter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 public class UserSession {
 
     @Id

@@ -8,6 +8,8 @@ import lombok.*;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name = "users")
 public class User {
 
@@ -16,11 +18,10 @@ public class User {
     private Integer id;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     String login;
 
     @NotNull
-    @Column(nullable = false)
     String password;
 
 }

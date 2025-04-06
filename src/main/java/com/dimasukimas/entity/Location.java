@@ -2,9 +2,7 @@ package com.dimasukimas.entity;
 
 import jakarta.persistence.*;
 import jakarta.validation.constraints.NotNull;
-import lombok.Builder;
-import lombok.Getter;
-import lombok.Setter;
+import lombok.*;
 
 import java.math.BigDecimal;
 
@@ -12,6 +10,8 @@ import java.math.BigDecimal;
 @Builder
 @Getter
 @Setter
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
+@AllArgsConstructor
 @Table(name = "Locations")
 public class Location {
 
@@ -20,19 +20,18 @@ public class Location {
     private Integer id;
 
     @NotNull
-    @Column(nullable = false, unique = true)
+    @Column(unique = true)
     private String name;
 
     @ManyToOne
-    @JoinColumn(name = "userId", nullable = false)
+    @NotNull
+    @JoinColumn(name = "userId")
     private User user;
 
     @NotNull
-    @Column(nullable = false)
     BigDecimal latitude;
 
     @NotNull
-    @Column(nullable = false)
     BigDecimal longitude;
 
 }
