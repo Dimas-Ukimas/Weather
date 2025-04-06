@@ -3,6 +3,7 @@ package com.dimasukimas.service;
 import com.dimasukimas.entity.User;
 import com.dimasukimas.entity.UserSession;
 import com.dimasukimas.repository.SessionRepository;
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
@@ -12,6 +13,7 @@ import java.util.UUID;
 
 @Service
 @RequiredArgsConstructor
+@Getter
 public class SessionService {
 
     private final SessionRepository sessionRepository;
@@ -36,6 +38,11 @@ public class SessionService {
 
     }
 
+    public User getUserBySessionId(UUID sessionId) {
+        UserSession session = sessionRepository.findById(sessionId).orElseThrow();
+
+        return session.getUser();
+    }
 
 
 }
