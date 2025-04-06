@@ -35,7 +35,7 @@ public class UserService {
         userRepository.persist(user);
 
         UUID sessionId = sessionService.createSession(user);
-        Cookie cookie = CookieUtils.createCookie(sessionId);
+        Cookie cookie = CookieUtils.createCookie(sessionId, sessionService.getSessionTimeoutInMinutes());
 
         return mapper.toDto(user, cookie);
     }
