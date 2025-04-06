@@ -1,15 +1,18 @@
 package com.dimasukimas.dto;
 
-import java.util.Optional;
+import lombok.Getter;
+import lombok.Setter;
 
-public record LocationDto(
-        String name,
-        double lat,
-        double lon,
-        String country,
-        Optional<String> state) {
+import java.math.BigDecimal;
 
-    public String getState() {
-        return state.orElse("");
-    }
+@Getter
+@Setter
+public class LocationResponseDto {
+
+    String name;
+    BigDecimal lat;
+    BigDecimal lon;
+    String country;
+    String state;
+    boolean alreadyAdded;
 }
