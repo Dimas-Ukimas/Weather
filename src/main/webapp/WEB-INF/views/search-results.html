@@ -11,7 +11,8 @@
 <nav class="navbar navbar-light bg-light">
     <div class="container-fluid">
         <a class="navbar-brand" href="#">
-            <img src="../../static/images/weather-app.png" alt="" width="30" height="24" class="d-inline-block align-text-top">
+            <img src="../../static/images/weather-app.png" alt="" width="30" height="24"
+                 class="d-inline-block align-text-top">
             Weather Tracker
         </a>
         <div class="d-flex align-items-center">
@@ -59,10 +60,18 @@
 
                             <p class="card-text mb-1" th:text="'Country: ' + ${location.country}"></p>
 
-                            <p class="card-text mb-3" th:text="'State: ' + ${location.state}"></p>
+                            <p class="card-text mb-3" th:text="'State: ' + (${location.state} != null ? ${location.state} : '')"></p>
 
-                            <div class="mt-auto">
-                                <button class="btn btn-primary w-100">Add</button>
+                            <div th:if="${location.alreadyAdded}">
+                                <button type="button" class="btn btn-success w-100" disabled>Added</button>
+                            </div>
+                            <div th:unless="${location.alreadyAdded}">
+                                <form action="/search" method="post">
+                                    <input type="hidden" name="name" th:value="${location.name}">
+                                    <input type="hidden" name="latitude" th:value="${location.lat}">
+                                    <input type="hidden" name="longitude" th:value="${location.lon}">
+                                    <button type="submit" class="btn btn-primary w-100">Add</button>
+                                </form>
                             </div>
                         </div>
                     </div>
