@@ -11,9 +11,19 @@ public class CookieUtils {
         int cookieMaxAgeInSeconds = 60 * sessionTimeoutInMinutes;
 
         Cookie cookie = new Cookie("userCookie", sessionId.toString());
+        cookie.setPath("/");
         cookie.setHttpOnly(true);
         cookie.setMaxAge(cookieMaxAgeInSeconds);
         cookie.setSecure(true);
+
+        return cookie;
+    }
+
+    public static Cookie createExpiredCookie(String name) {
+        Cookie cookie = new Cookie(name, null);
+        cookie.setMaxAge(0);
+        cookie.setPath("/");
+        cookie.setHttpOnly(true);
 
         return cookie;
     }

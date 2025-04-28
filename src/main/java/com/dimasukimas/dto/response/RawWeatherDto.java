@@ -1,9 +1,9 @@
-package com.dimasukimas.dto;
+package com.dimasukimas.dto.response;
 
 import java.math.BigDecimal;
 import java.util.List;
 
-public record UserLocationResponseDto(
+public record RawWeatherDto(
         String name,
         Sys sys,
         Main main,

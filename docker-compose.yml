@@ -1,27 +1,59 @@
-version: '3.8'
-
 services:
-  database:
+  database-prod:
     image: postgres:16
-    container_name: postgres-container
-    env_file:
-      - .env
+    container_name: postgres-prod
     environment:
       POSTGRES_DB: ${DB_NAME}
       POSTGRES_USER: ${DB_USER}
       POSTGRES_PASSWORD: ${DB_PASSWORD}
     volumes:
-      - db-data:/var/lib/postgresql/data
+      - db-data-prod:/var/lib/postgresql/data
     ports:
       - "5432:5432"
     networks:
       - my_network
+    profiles:
+      - prod
 
-  liquibase:
+  database-dev:
+    image: postgres:16
+    container_name: postgres-dev
+    environment:
+      POSTGRES_DB: weather-db-dev
+      POSTGRES_USER: dev
+      POSTGRES_PASSWORD: dev
+    ports:
+      - "5433:5432"
+    networks:
+      - my_network
+    profiles:
+      - dev
+
+  liquibase-dev:
     image: liquibase/liquibase:4.31.1
-    container_name: liquibase-container
-    env_file:
-      - .env
+    container_name: liquibase-dev
+    environment:
+      DB_URL: jdbc:postgresql://postgres-dev:5432/weather-db-dev
+      DB_USER: dev
+      DB_PASSWORD: dev
+      CHANGELOG_FILE: /liquibase/changelog/changelog-master.yaml
+    volumes:
+      - ./src/main/resources/db/changelog:/liquibase/changelog
+    depends_on:
+      - database-dev
+    networks:
+      - my_network
+    command:
+      --url=jdbc:postgresql://postgres-dev:5432/weather-db-dev
+      --username=dev
+      --password=dev
+      --changeLogFile=/changelog/changelog-master.yaml update
+    profiles:
+      - dev
+
+  liquibase-prod:
+    image: liquibase/liquibase:4.31.1
+    container_name: liquibase-prod
     environment:
       DB_URL: ${DB_URL}
       DB_USER: ${DB_USER}
@@ -30,7 +62,7 @@ services:
     volumes:
       - ./src/main/resources/db/changelog:/liquibase/changelog
     depends_on:
-      - database
+      - database-prod
     networks:
       - my_network
     command:
@@ -38,28 +70,57 @@ services:
       --username=${DB_USER}
       --password=${DB_PASSWORD}
       --changeLogFile=/changelog/changelog-master.yaml update
+    profiles:
+      - prod
 
-  tomcat:
-    container_name: tomcat-container
-    env_file:
-      - .env
-    build: .
+  app-prod:
+    container_name: app-prod
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./build/libs/weatherApp-1.0-SNAPSHOT.war:/usr/local/tomcat/webapps/ROOT.war
     environment:
       DB_URL: ${DB_URL}
       DB_USER: ${DB_USER}
       DB_PASSWORD: ${DB_PASSWORD}
+      SPRING_PROFILES_ACTIVE: ${SPRING_PROFILES_ACTIVE}
+      WEATHER_API_KEY: ${WEATHER_API_KEY}
+    depends_on:
+      - database-prod
+    ports:
+      - "8080:8080"
+    networks:
+      - my_network
+    profiles:
+      - prod
+
+  app-dev:
+    container_name: app-dev
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ./build/libs/weatherApp-1.0-SNAPSHOT.war:/usr/local/tomcat/webapps/ROOT.war
+    environment:
+      DB_URL: jdbc:postgresql://postgres-dev:5432/weather-db-dev
+      DB_USER: dev
+      DB_PASSWORD: dev
+      SPRING_PROFILES_ACTIVE: dev
       JPDA_ADDRESS: "*:5005"
       JPDA_TRANSPORT: "dt_socket"
     depends_on:
-      - liquibase
+      - database-dev
     ports:
       - "8080:8080"
       - "5005:5005"
     networks:
       - my_network
+    profiles:
+      - dev
 
 volumes:
-  db-data:
+  db-data-prod:
 
 networks:
   my_network:

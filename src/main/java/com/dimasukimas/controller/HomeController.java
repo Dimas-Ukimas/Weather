@@ -1,7 +1,9 @@
 package com.dimasukimas.controller;
 
-import com.dimasukimas.dto.UserLocationResponseDto;
+import com.dimasukimas.dto.response.WeatherDto;
+import com.dimasukimas.entity.User;
 import com.dimasukimas.service.LocationService;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -15,20 +17,21 @@ import java.util.UUID;
 @Controller
 @RequestMapping("/")
 @RequiredArgsConstructor
-public class HomePageController {
+public class HomeController {
 
     private final LocationService locationService;
+    private final static String HOME_PAGE = "index";
 
     @GetMapping
-    public String homePage(Model model,
-                           @CookieValue(name = "userCookie", required = false) UUID sessionId) {
+    public String home(Model model,
+                       @CookieValue(name = "userCookie", required = false) UUID sessionId,
+                       HttpServletRequest request) {
+
         if (sessionId != null) {
-
-            List<UserLocationResponseDto> userLocations = locationService.getUserLocations(sessionId);
+            List<WeatherDto> userLocations = locationService.getUserLocations(sessionId);
             model.addAttribute("userLocations", userLocations);
-
         }
-        return "index";
+        return HOME_PAGE;
     }
 
 }

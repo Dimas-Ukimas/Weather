@@ -18,6 +18,7 @@ import java.util.Properties;
 
 @Configuration
 @PropertySource("classpath:application.properties")
+@PropertySource("classpath:application-${SPRING_PROFILES_ACTIVE}.properties")
 @EnableTransactionManagement
 @RequiredArgsConstructor
 public class JpaConfig {
@@ -40,8 +41,8 @@ public class JpaConfig {
         Properties properties = new Properties();
         properties.put("hibernate.dialect", env.getProperty("spring.jpa.database-platform", "org.hibernate.dialect.PostgreSQLDialect"));
         properties.put("hibernate.hbm2ddl.auto", env.getProperty("spring.jpa.hibernate.ddl-auto", "validate"));
-        properties.put("hibernate.show_sql", env.getProperty("spring.jpa.show-sql", "true"));
-        properties.put("hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql", "true"));
+        properties.put("hibernate.show_sql", env.getProperty("spring.jpa.show-sql", "false"));
+        properties.put("hibernate.format_sql", env.getProperty("spring.jpa.properties.hibernate.format_sql", "false"));
         return properties;
     }
 

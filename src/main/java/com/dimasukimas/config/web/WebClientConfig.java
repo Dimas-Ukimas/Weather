@@ -9,10 +9,10 @@ import org.springframework.web.reactive.function.client.WebClient;
 public class WebClientConfig {
 
     @Bean
-    public WebClient webClient(@Value("${open-weather.api.url}") String baseUrl
+    public WebClient webClient(@Value("${weather.api.url}") String baseUrl
     ) {
         if (baseUrl.isBlank()) {
-            throw new IllegalArgumentException("Property 'open-weather.api.url' is absent or blank");
+            throw new IllegalArgumentException("Property 'weather.api.url' is absent or blank");
         }
 
         return WebClient.builder()

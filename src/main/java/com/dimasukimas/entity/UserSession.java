@@ -19,11 +19,10 @@ public class UserSession {
     private UUID id;
 
     @OneToOne
-    @NotNull
-    @JoinColumn(name = "userId", nullable = false)
+    @NotNull @JoinColumn(name = "userId", nullable = false)
     private User user;
 
-    @NotNull
+    @NotNull @Column(nullable = false)
     private LocalDateTime expiresAt;
 
 }

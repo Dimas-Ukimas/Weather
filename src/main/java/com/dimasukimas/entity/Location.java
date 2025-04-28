@@ -12,26 +12,27 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
-@Table(name = "Locations")
+@Table(name = "Locations",
+        uniqueConstraints = {@UniqueConstraint(columnNames = {"user", "latitude", "longitude"})
+        }
+)
 public class Location {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Integer id;
 
-    @NotNull
-    @Column(unique = true)
+    @NotNull @Column(nullable = false)
     private String name;
 
     @ManyToOne
-    @NotNull
-    @JoinColumn(name = "userId")
+    @NotNull @JoinColumn(name = "userId", nullable = false)
     private User user;
 
-    @NotNull
+    @NotNull @Column(nullable = false)
     BigDecimal latitude;
 
-    @NotNull
+    @NotNull @Column(nullable = false)
     BigDecimal longitude;
 
 }

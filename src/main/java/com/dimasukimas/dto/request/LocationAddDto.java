@@ -1,8 +1,8 @@
-package com.dimasukimas.dto;
+package com.dimasukimas.dto.request;
 
 import java.math.BigDecimal;
 
-public record LocationRequestDto(
+public record LocationAddDto(
         String name,
         BigDecimal latitude,
         BigDecimal longitude
