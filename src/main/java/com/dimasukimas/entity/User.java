@@ -1,25 +1,26 @@
 package com.dimasukimas.entity;
 
 import jakarta.persistence.*;
+import jakarta.validation.constraints.NotNull;
 import lombok.*;
 
 @Entity
 @Builder
 @Getter
 @Setter
-@NoArgsConstructor
+@NoArgsConstructor(access = AccessLevel.PROTECTED)
 @AllArgsConstructor
 @Table(name = "users")
 public class User {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    private int id;
+    private Integer id;
 
-    @Column(nullable = false, unique = true)
+    @NotNull @Column(nullable = false, unique = true)
     String login;
 
-    @Column(nullable = false)
+    @NotNull @Column(nullable = false)
     String password;
 
 }

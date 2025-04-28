@@ -1,7 +1,13 @@
 package com.dimasukimas.repository;
 
-public interface Repository<T, ID>{
+import java.util.Optional;
 
- void persist(T t);
+public interface Repository<E, ID>{
+
+ void persist(E entity);
+
+ Optional<E> findById(ID id);
+
+ void delete(E entity);
 
 }

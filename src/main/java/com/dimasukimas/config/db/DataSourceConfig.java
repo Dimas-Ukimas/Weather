@@ -1,12 +1,10 @@
-package com.dimasukimas.config;
+package com.dimasukimas.config.db;
 
 import com.zaxxer.hikari.HikariConfig;
 import com.zaxxer.hikari.HikariDataSource;
-import io.github.cdimascio.dotenv.Dotenv;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.core.env.Environment;
 
 import javax.sql.DataSource;
 
@@ -16,21 +14,25 @@ public class DataSourceConfig {
     @Value("${spring.jpa.db.driver}")
     String dbDriver;
 
+    @Value("${DB_URL}")
+    String dbUrl;
+
+    @Value("${DB_USER}")
+    String dbUser;
+
+    @Value("${DB_PASSWORD}")
+    String dbPassword;
+
     @Bean
-    public DataSource dataSource(Environment env) {
-
-        Dotenv dotenv = Dotenv.load();
-
-        String dbUrl = dotenv.get("DB_URL");
-        String dbUser = dotenv.get("DB_USER");
-        String dbPassword = dotenv.get("DB_PASSWORD");
+    public DataSource dataSource() {
 
         HikariConfig hikariConfig = new HikariConfig();
         hikariConfig.setJdbcUrl(dbUrl);
         hikariConfig.setUsername(dbUser);
         hikariConfig.setPassword(dbPassword);
-        hikariConfig.setDriverClassName(env.getProperty("spring.jpa.db.driver"));
+        hikariConfig.setDriverClassName(dbDriver);
 
         return new HikariDataSource(hikariConfig);
     }
+
 }

@@ -4,10 +4,17 @@
 CREATE TABLE Locations
 (
     id        SERIAL PRIMARY KEY,
-    name      VARCHAR(20) NOT NULL,
+    name      VARCHAR(40) NOT NULL,
     userId    INTEGER     NOT NULL,
-    latitude  DECIMAL     NOT NULL,
-    longitude DECIMAL     NOT NULL
+    latitude  DECIMAL   NOT NULL,
+    longitude DECIMAL    NOT NULL
 
---rollback DROP TABLE Locations;
+
 )
+
+--changeset dimasukimas:add-unique-index
+CREATE UNIQUE INDEX ux_user_location_coordinates
+ON Locations (userId, latitude, longitude);
+
+--rollback DROP INDEX ux_user_location_coordinates;
+--rollback DROP TABLE Locations;

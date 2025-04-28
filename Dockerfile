@@ -1,6 +1,4 @@
-FROM tomcat:10-jdk17
-
-COPY build/libs/weatherApp-1.0-SNAPSHOT.war /usr/local/tomcat/webapps/ROOT.war
+FROM tomcat:10-jdk21
 
 EXPOSE 8080
 EXPOSE 5005
