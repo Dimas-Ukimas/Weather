@@ -5,9 +5,9 @@ Weather App is a web application that allows users to track current weather cond
 
 **Frontend:** Thymeleaf, HTML/CSS  
 **Backend:** Java, Spring MVC  
-**Database:** PostrgeSQL
+**Database:** PostrgeSQL   
 **ORM:** Hibernate  
-**Tests:** JUnit5, H2 
+**Tests:** JUnit5, H2  
 **Building:** Gradle  
 **Deploy:** Docker  
 **Other:** Lombok, MapStruct 
