@@ -1,4 +1,4 @@
-# Weather
+# Overview
 Weather App is a web application that allows users to track current weather conditions in different locations.
 
 # Technologies
