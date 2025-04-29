@@ -1,16 +1,16 @@
 # Weather
-Weather App is a web application that allows users to track current weather conditions in diffrents locations.
+Weather App is a web application that allows users to track current weather conditions in different locations.
 
 # Technologies
 
-**Frontend:** Thymeleaf, HTML/CSS 
+**Frontend:** Thymeleaf, HTML/CSS  
 **Backend:** Java, Spring MVC  
-**Database:** PostrgeSQL, H2 
+**Database:** PostrgeSQL
 **ORM:** Hibernate  
-**Tests:** JUnit5  
-**Building:** Gradle 
+**Tests:** JUnit5, H2 
+**Building:** Gradle  
 **Deploy:** Docker  
-**Other:** Lombok, MapStruct, Logback  
+**Other:** Lombok, MapStruct 
 
 # How to Run
 1. Clone the repository  
